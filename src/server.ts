@@ -36,18 +36,20 @@ async function streamConsumer() {
       );
 
       if (response) {
-        const { name, messages } = response;
+        const [{ name, messages }] = response;
 
-        console.log(`Message received: [${name}]: ${messages}`);
+        console.log('Message received: ', response);
 
-        messages.forEach(({id, message: { message }}) => {
-          try {
-            const { from, to, subject, body, plain } = JSON.parse(message);
-            emailService().sendEmail(from, to, subject, body, plain);
-          } catch (e) {
-            console.log(`error parsing message [${id}]: `, e);
-          }
-        });
+        if (name === 'mailing-stream' && messages) {
+          messages.forEach(({id, message: { message }}) => {
+            try {
+              const { from, to, subject, body, plain } = JSON.parse(message);
+              emailService().sendEmail(from, to, subject, body, plain);
+            } catch (e) {
+              console.log(`error parsing message [${id}]: `, e);
+            }
+          });
+        }
 
         // Get the ID of the first (only) entry returned.
         currentId = response[0].messages[0].id;
