@@ -15,7 +15,7 @@ RUN npm install
 # Bundle app source
 COPY . .
 
-EXPOSE 9229
+EXPOSE 9231
 
 VOLUME ["./src:/usr/src/app/src"]
 
