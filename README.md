@@ -1,6 +1,8 @@
 ## Run in docker
 
+```sh
 docker-compose up --build
+```
 
 ## Install and Use
 
