@@ -19,4 +19,6 @@ EXPOSE 9231
 
 VOLUME ["./src:/usr/src/app/src"]
 
+ENV REDIS_HOST dacs_redis_db
+
 CMD [ "npm", "run", "start" ]

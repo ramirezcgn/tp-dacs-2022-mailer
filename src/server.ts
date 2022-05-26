@@ -1,9 +1,20 @@
 import { createClient, commandOptions } from 'redis';
 import emailService from './email.service';
 
+declare const process: {
+  env: {
+    [key: string]: string;
+  };
+};
+
+let redisHost = 'localhost';
+if (process.env.REDIS_HOST) {
+  redisHost = process.env.REDIS_HOST;
+}
+
 async function streamConsumer() {
   const client = createClient({
-    url: 'redis://dacs_redis_db:6379',
+    url: `redis://${redisHost}:6379`,
   });
 
   console.log('Connecting to redis...');
